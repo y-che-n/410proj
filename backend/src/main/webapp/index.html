@@ -128,18 +128,22 @@
 
 	function parseText(input){
 		var output = "";
+		var stop = false;
 		for(var i = 0; i < input.length; i++){
 			var characterCode = input.charCodeAt(i);
 			var character = input.charAt(i);
-			if(character == "\n"){
+			if(character == "\n" && !stop){
 					output += character;
-			}else if(character == " ")
+					stop = true;
+			}else if(character == " "){
 					output += character;
-
-			else if((characterCode >= 65 && characterCode <= 90) ||
+                    stop = false;
+			}else if((characterCode >= 65 && characterCode <= 90) ||
 			 (characterCode >= 97 && characterCode <= 122) ||
 			 (characterCode >= 48 && characterCode <= 57)){
 					output += character.toLowerCase();
+					                    stop = false;
+
 			}
 
 		}
