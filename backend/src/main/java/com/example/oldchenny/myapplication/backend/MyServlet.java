@@ -21,11 +21,17 @@ public class MyServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String name = req.getParameter("name");
+        String docA = req.getParameter("DocumentA");
+        String docB = req.getParameter("DocumentB");
         resp.setContentType("text/plain");
-        if (name == null) {
-            resp.getWriter().println("Please enter a name");
+        if (docA == null) {
+            resp.getWriter().println("Please enter Document A");
         }
-        resp.getWriter().println("Hello " + name);
+        if (docB == null) {
+            resp.getWriter().println("Please enter Document B");
+        }
+        resp.getWriter().println("Hello " + docA);
+        resp.getWriter().println("Hello " + docB);
+        resp.setHeader("Access-Control-Allow-Origin", "*");
     }
 }
