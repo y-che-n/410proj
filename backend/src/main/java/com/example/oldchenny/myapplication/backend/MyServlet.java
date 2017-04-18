@@ -8,7 +8,10 @@ package com.example.oldchenny.myapplication.backend;
 
 import java.io.IOException;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 public class MyServlet extends HttpServlet {
     @Override
@@ -30,8 +33,18 @@ public class MyServlet extends HttpServlet {
         if (docB == null) {
             resp.getWriter().println("Please enter Document B");
         }
+
+        try {
+            DocumentParser.retrievePresentationText("https://docs.google.com/presentation/d/1yCLpPkldwILBOhnyQvmrkn4LFLAaltLzRQ5kXT_OeSg/edit?usp=sharing5");
+        }catch(Exception e){}
+
         resp.getWriter().println("Hello " + docA);
         resp.getWriter().println("Hello " + docB);
         resp.setHeader("Access-Control-Allow-Origin", "*");
     }
+
+
+
+
+
 }

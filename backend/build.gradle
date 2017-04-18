@@ -24,6 +24,8 @@ targetCompatibility = JavaVersion.VERSION_1_7
 dependencies {
     appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.42'
     compile 'javax.servlet:servlet-api:2.5'
+    compile files('src/main/libs/jsoup-1.7.3.jar')
+    compile files('src/main/libs/stanford-english-corenlp-2016-10-31-models.jar')
 }
 
 appengine {
