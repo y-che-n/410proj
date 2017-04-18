@@ -35,6 +35,7 @@ public class MyServlet extends HttpServlet {
         }
 
         try {
+            //retrieve sample pres
             DocumentParser.retrievePresentationText("https://docs.google.com/presentation/d/1yCLpPkldwILBOhnyQvmrkn4LFLAaltLzRQ5kXT_OeSg/edit?usp=sharing5");
         }catch(Exception e){}
 
