@@ -16,16 +16,22 @@ public class WordForWord {
      * @param docB  reference doc
      * @return ArrayList of String phrases that were word for word in both docs.
      */
-    public ArrayList<String> wordForWord(String[][] docA, String[][] docB) {
-        ArrayList<String> phrases = new ArrayList<String>();
-
+    public static ArrayList<ArrayList<Integer>> wordForWord(String[][] docA, String[][] docB) {
+        ArrayList<ArrayList<Integer>> phrases = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> x = new ArrayList<Integer>();
+        ArrayList<Integer> y = new ArrayList<Integer>();
+        ArrayList<Integer> length = new ArrayList<Integer>();
         for (int i = 0; i < docB.length; i++) {
             for (int j = 0; j < docA.length; j++) {
-                ArrayList<String> s = compare(docB[i], docA[j]);
-                phrases.addAll(s);
+                ArrayList<ArrayList<Integer>> s = compare(docB[i], docA[j], i);
+                x.addAll(s.get(0));
+                y.addAll(s.get(1));
+                length.addAll(s.get(2));
             }
         }
-
+        phrases.add(x);
+        phrases.add(y);
+        phrases.add(length);
         return phrases;
     }
 
@@ -36,12 +42,18 @@ public class WordForWord {
      * @param stringB  String from reference doc
      * @return ArrayList of word-for-word phrases between stringA and stringB.
      */
-    private ArrayList<String> compare(String[] stringA, String[] stringB) {
-        ArrayList<String> phrases = new ArrayList<String>();
+    private static ArrayList<ArrayList<Integer>> compare(String[] stringA, String[] stringB, int sentenceNo) {
+        ArrayList<Integer> phrases = new ArrayList<Integer>();
+        ArrayList<Integer> xCoord = new ArrayList<Integer>();
+        ArrayList<Integer> yCoord = new ArrayList<Integer>();
 
-        for (int i = 0; i < stringB.length; i++) {
+        out: for (int i = 0; i < stringB.length; i++) {
             for (int j = 0; j < stringA.length; j++) {
+                String abc = stringB[i];
+
                 if (stringB[i].equalsIgnoreCase(stringA[j])) {
+                    int x = sentenceNo;
+                    int y = i;
                     String s = stringB[i];
                     i++; j++;
                     int phraseLength = 1;
@@ -52,12 +64,43 @@ public class WordForWord {
                             phraseLength++;
                         } else break;
                     }
-                    if (phraseLength > 2) phrases.add(s);
+
+                    if (phraseLength > 2) {
+                        xCoord.add(x);
+                        yCoord.add(y);
+                        phrases.add(phraseLength);
+                    }
+
+                    if(i >= stringB.length)
+                        break out;
                 }
             }
         }
+        ArrayList<ArrayList<Integer>> coords = new ArrayList<ArrayList<Integer>>();
+        coords.add(xCoord);
+        coords.add(yCoord);
+        coords.add(phrases);
+        return coords;
+    }
 
-        return phrases;
+    public static void main(String[] args) {
+        String a[][] = new String[1][5];
+        a[0][0] = "the";
+        a[0][1] = "quick";
+        a[0][2] = "brown";
+
+        a[0][3] = "fox";
+        a[0][4] = "jumped";
+
+        String b[][] = new String[1][5];
+        b[0][0] = "the";
+        b[0][1] = "quick";
+        b[0][2] = "brown";
+
+        b[0][3] = "dog";
+        b[0][4] = "jumped";
+
+        System.out.println(wordForWord(a, b));
     }
 
 }
